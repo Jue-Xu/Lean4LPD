@@ -1,0 +1,36 @@
+name: Lean Action CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+        # Installs the pinned toolchain, runs `lake exe cache get`, then `lake build`.
+        # The build log carries the `#print axioms` output of Lean4LPD/Audit.lean.
+
+      - name: Regression tests
+        run: |
+          set -euo pipefail
+          for test in tests/*.lean; do
+            lake env lean "$test"
+          done
+        # Non-vacuity witnesses: each headline theorem is instantiated at a nondegenerate point,
+        # and each necessary hypothesis is shown to be necessary by an explicit witness.
+
+      - name: Axiom gate
+        run: |
+          set -euo pipefail
+          lake env lean Lean4LPD/Audit.lean > audit.log 2>&1
+          python3 scripts/check_axioms.py audit.log
+        # Fails if any audited theorem depends on anything beyond
+        # propext, Classical.choice and Quot.sound.
