@@ -14,6 +14,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
+
+      - name: Docs math lint
+        run: python3 scripts/check_md_math.py
+        # README.md and STATEMENTS.md must use the math syntax that GitHub renders verbatim.
+
       - uses: leanprover/lean-action@v1
         # Installs the pinned toolchain, runs `lake exe cache get`, then `lake build`.
         # The build log carries the `#print axioms` output of Lean4LPD/Audit.lean.
