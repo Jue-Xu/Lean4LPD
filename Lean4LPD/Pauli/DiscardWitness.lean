@@ -135,7 +135,7 @@ theorem cutoff_Q : truncOp (highSet 2 1)ᶜ (toMatrix Q) = 0 := by
   rw [← herm_Q, coeff_toMatrix_herm, ite_eq_right hpq, zero_smul]
 
 /-- Concrete regression example for `apd:eq:step_component`: the discarded operator is `Q`.
-This is the subtraction defining the paper's `X_d`, specialized to the evolved witness. -/
+This is the subtraction defining the paper's `Õ^{(d)}_{≥w*+1}`, specialized to the evolved witness. -/
 theorem discarded_eq_Q : toMatrix Q - truncOp (highSet 2 1)ᶜ (toMatrix Q) = toMatrix Q := by
   rw [cutoff_Q, sub_zero]
 

@@ -50,7 +50,7 @@ lists what is outside the library. The column *Module* names a Lean module: `Pau
   trajectory is $`\tilde O^{(0)}_{\le w^\ast} = O`$,
   $`\tilde O^{(d)}_{\le w^\ast} = \Pi_{\le w^\ast}\bigl(\widetilde U^\dagger\, \tilde O^{(d-1)}_{\le w^\ast}\, \widetilde U\bigr)`$,
   and $`\mathrm{LPD}_r(O) = \tilde O^{(r)}_{\le w^\ast}`$. The threshold is parameterized as
-  $`w^\ast = k_o + m^\ast(k_h-1) = w_{m^\ast+1}`$. The operator discarded at the end of step $`d`$ is $`X_d`$ (Section 9).
+  $`w^\ast = k_o + m^\ast(k_h-1) = w_{m^\ast+1}`$. The operator discarded at the end of step $`d`$ is $`\tilde O^{(d)}_{\ge w^\ast+1}`$ (Section 9).
 
 ### Dictionary
 
@@ -341,8 +341,8 @@ the norm discarded over all $`r`$ steps obeys
 \Bigl(\frac{r+1}{r}\,\Gamma\,\alpha t\Bigr)^{m^\ast+1}\frac{\prod_{j=2}^{m^\ast+2}w_j}{(m^\ast+1)!}\cdot\lVert O\rVert_{\bar 2}.
 ```
 
-Here $`\tilde O^{(d)}_{\ge w^\ast+1}`$ is the high-weight part at the end of step $`d`$, before the truncation; it has the norm of
-$`X_d`$ (Section 9).
+Here $`\tilde O^{(d)}_{\ge w^\ast+1}`$ is the operator discarded at the end of step $`d`$: the high-weight part of the evolved
+operator before the truncation (Section 9).
 
 **Statement (`apd:thm:c0_bound`, `apd:eq:multijump_factor`, `apd:eq:c0`).** Relaxing $`(r+1)\Gamma \ge r\Gamma`$, the correction
 relative to the single-jump sector is
@@ -401,13 +401,13 @@ attained at $`(1,0,8,1)`$ by `cZero_eq_four_mul_exp_at_worst`) and $`c_0 \le 10/
 **Statement (`apd:eq:step_component`).** The operator discarded at the end of Trotter step $`d`$ is
 
 ```math
-X_d := (1-\Pi_{\le w^\ast})\;\widetilde U^\dagger\,\tilde O^{(d-1)}_{\le w^\ast}\,\widetilde U .
+\tilde O^{(d)}_{\ge w^\ast+1} := (1-\Pi_{\le w^\ast})\;\widetilde U^\dagger\,\tilde O^{(d-1)}_{\le w^\ast}\,\widetilde U .
 ```
 
 **Statement (`apd:thm:triangle`).** The difference between the untruncated and the truncated evolution telescopes,
 
 ```math
-\tilde O^{(r)} - \tilde O^{(r)}_{\le w^\ast} = \sum_{d=1}^{r}\widetilde U^{\dagger (r-d)}\,X_d\,\widetilde U^{\,r-d},
+\tilde O^{(r)} - \tilde O^{(r)}_{\le w^\ast} = \sum_{d=1}^{r}\widetilde U^{\dagger (r-d)}\,\tilde O^{(d)}_{\ge w^\ast+1}\,\widetilde U^{\,r-d},
 \qquad \tilde O^{(r)} := \widetilde U^{\dagger r} O\,\widetilde U^{r},
 ```
 
@@ -429,14 +429,15 @@ obeys
 
 **Relation.** `discardedStep_eq_truncOp` identifies the discarded operator with the high-weight projection of the operator
 before the cut, and `pauliNorm_discardedStep` (for layered steps, `pauliNorm_discardedLayerStep`) gives
-$`\lVert X_d\rVert_{\bar 2} = \lVert\tilde O^{(d)}_{\ge w^\ast+1}\rVert_{\bar 2}`$; the underlying identity is
+$`\lVert\tilde O^{(d)}_{\ge w^\ast+1}\rVert_{\bar 2}`$ as the high-weight norm of
+$`\widetilde U^\dagger\,\tilde O^{(d-1)}_{\le w^\ast}\,\widetilde U`$, the Pauli 2-norm of its part above $`w^\ast`$; the underlying identity is
 `PauliString.pauliNorm_sub_truncOp_highSet_compl` in `Pauli.Discard`. The step-indexed trajectory and the trajectory indexed by
 rotations (or layers) with a cut after every block are defined independently, and their agreement at step boundaries is a
-theorem. Lean counts steps from zero, so `discardedStep … d` is $`X_{d+1}`$ and the exponent `r - 1 - d` is the paper's $`r-d`$. The
+theorem. Lean counts steps from zero, so `discardedStep … d` is $`\tilde O^{(d+1)}_{\ge w^\ast+1}`$ and the exponent `r - 1 - d` is the paper's $`r-d`$. The
 conclusion is formalized at the norm level only:
 
 ```math
-\bigl\lVert\tilde O^{(r)} - \tilde O^{(r)}_{\le w^\ast}\bigr\rVert_{\bar 2} \le \sum_{d=1}^{r}\lVert X_d\rVert_{\bar 2},
+\bigl\lVert\tilde O^{(r)} - \tilde O^{(r)}_{\le w^\ast}\bigr\rVert_{\bar 2} \le \sum_{d=1}^{r}\bigl\lVert\tilde O^{(d)}_{\ge w^\ast+1}\bigr\rVert_{\bar 2},
 ```
 
 assuming only that the generators are Hermitian (so that the remaining evolution preserves the norm,
@@ -525,12 +526,12 @@ and the bound decays in $`m^\ast`$ under the condition $`t \lt t_0`$ (`apd:eq:ti
    $`S \le (t/t_0)^{m^\ast+1}(e(m^\ast+1))^c M`$ with $`t_0 = 1/(2\Gamma(k_h-1)\alpha)`$, provided `Admissible r m Γ`, $`m^\ast \ge 1`$,
    $`r \ge 5`$ and $`0 \le 4e\beta \le 1`$. This is where $`c_0 \le 2`$ (`cZero_le_two`) is used: the constant $`2`$ in `tZeroModel` is
    the paper's bound $`c_0 \le 2`$. Applied to the error norm it yields the theorem displayed at the top of this section; applied to
-   $`S = \sum_d\lVert X_d\rVert_{\bar 2}`$ it yields the norm-level display of the paper with $`c_0`$ replaced by $`2`$ and with the
+   $`S = \sum_d\lVert\tilde O^{(d)}_{\ge w^\ast+1}\rVert_{\bar 2}`$ it yields the norm-level display of the paper with $`c_0`$ replaced by $`2`$ and with the
    smaller prefactor of step 2.
 4. `source_entry_inflation_le_one` derives $`4e\beta \le 1`$ from $`r \ge 8e^2(k_o+k_h-1)\alpha t`$, which is how
    `…_of_source_regime` follows from `pauliNorm_layerStep_error_le_model`.
 
-Consequently Lean proves the paper's norm-level estimate, read with the uniform constant $`c_0 = 2`$, for the error norm (the theorem above); for the sum $`\sum_d\lVert X_d\rVert_{\bar 2}`$ that the paper's display bounds, it follows by composing `sum_pauliNorm_discardedLayerStep_le_cZero` with `total_truncation_error_product_bound`, a composition that has no name in the library. Both have a
+Consequently Lean proves the paper's norm-level estimate, read with the uniform constant $`c_0 = 2`$, for the error norm (the theorem above); for the sum $`\sum_d\lVert\tilde O^{(d)}_{\ge w^\ast+1}\rVert_{\bar 2}`$ that the paper's display bounds, it follows by composing `sum_pauliNorm_discardedLayerStep_le_cZero` with `total_truncation_error_product_bound`, a composition that has no name in the library. Both have a
 better prefactor. With the instance-dependent $`c_0 \lt 2`$ the paper's base $`t/t_0`$ is smaller than Lean's, while Lean's prefactor
 is smaller than the paper's; the instance-dependent constant is available in Lean in the form of step 1. Using the literal $`2`$
 makes $`t_0`$ a function of $`\Gamma`$, $`k_h`$ and $`\alpha`$ alone, so that $`t/t_0`$ is fixed before $`m^\ast`$ and $`r`$ are chosen, and it is

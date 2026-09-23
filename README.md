@@ -66,7 +66,7 @@ Toolchain: `leanprover/lean4:v4.34.0-rc2`, Mathlib `v4.34.0-rc2`.
 | `entryFactor_le`, `partFactor_le` | $`E_\nu \le \varepsilon_\nu^{(\nu)}(1+2\beta)`$ for $`\beta\le1/2`$; a part of size $`j\ge2`$ ending at $`\sigma\ge j`$ costs at most $`(9/4)^{j-1}`$ | `apd:eq:entry_bound`, `apd:eq:part_factor` |
 | `cZero_le_two` | $`c_0 = \frac{r+1}{r}\,e^{\frac94\frac{m^\ast+1}{r\Gamma}}(1+B)^{\frac1{m^\ast+1}} \le 2`$ for $`m^\ast\ge1`$, $`r\ge5`$, $`8(m^\ast+1)^2\le r\Gamma`$, $`0\le B\le1`$ | `apd:eq:c0` |
 | `two_lt_cZero_of_admissible`, `…_four`, `…_of_m_zero`, `…_of_m_two` | neither $`m^\ast\ge1`$ nor $`r\ge5`$ can be dropped: explicit points that satisfy every other hypothesis and have $`c_0>2`$ | — |
-| `PauliString.pauliNorm_trotterTraj_error_le` | telescoping: $`\lVert \widetilde O^{(r)} - \mathrm{LPD}_r(O)\rVert_{\bar 2} \le \sum_{d} \lVert X_d\rVert_{\bar 2}`$, $`X_d`$ the operator discarded at step $`d`$ | `apd:eq:step_component`, `apd:thm:triangle` (norm level) |
+| `PauliString.pauliNorm_trotterTraj_error_le` | telescoping: $`\lVert \widetilde O^{(r)} - \mathrm{LPD}_r(O)\rVert_{\bar 2} \le \sum_{d} \lVert \widetilde O^{(d)}_{\ge w^\ast+1}\rVert_{\bar 2}`$, $`\widetilde O^{(d)}_{\ge w^\ast+1}`$ the operator discarded at step $`d`$ | `apd:eq:step_component`, `apd:thm:triangle` (norm level) |
 | **`PauliString.pauliNorm_layerStep_error_le_model_of_source_regime`** | **the displayed bound above** | `apd:thm:one_step_truncation_error` (norm level) |
 | `exists_model_norm_threshold` | for $`t<t_0`$ the right-hand side of the bound above falls below every tolerance at some finite $`m^\ast\ge1`$ (a statement about the scalar majorant; it is not composed with the main bound, whose $`r`$ and angles depend on $`m^\ast`$) | `apd:thm:truncation_threshold_entangled` (existence) |
 
@@ -170,7 +170,7 @@ Lean4LPD/
 │   ├── Count.lean           — number of Pauli strings of weight ≤ w
 │   ├── Branch.lean          — the rotation branch rule
 │   ├── Flow.lean            — damped local norm flow; the Pauli ladder
-│   ├── Truncate.lean, Discard.lean, TrotterTruncate.lean — truncation, the discarded operator X_d
+│   ├── Truncate.lean, Discard.lean, TrotterTruncate.lean — truncation, the discarded operator Õ^{(d)}_{≥w*+1}
 │   ├── TruncationError.lean — telescoping / triangle bound in Pauli 2-norm
 │   ├── LayerWitness.lean    — disjoint-support layers, the light cone, tightness
 │   ├── LayerCounterexample.lean — second-order step: a nonzero coefficient at weight 6 (the exponent counts layers)

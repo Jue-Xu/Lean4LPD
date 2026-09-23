@@ -8,7 +8,7 @@ import Lean4LPD.Pauli.Truncate
 /-!
 # The operator discarded by a Pauli truncation
 
-The component `X_d` of `apd:eq:step_component` is an operator difference, `(1 - Π_{≤ w*}) A`,
+The component `Õ^{(d)}_{≥w*+1}` of `apd:eq:step_component` is an operator difference, `(1 - Π_{≤ w*}) A`,
 where `A` is the evolved observable immediately before the truncation that ends step `d`. The
 scalar `highNorm w A` measures the high-weight coefficients of `A`, but that definition alone
 does not identify it with the norm of the discarded operator. This file proves the
@@ -119,8 +119,10 @@ theorem pauliNorm_truncOp_highSet (w : ℕ) (O : Matrix (Bits n) (Bits n) ℂ) :
 
 /-- **The high-weight scalar is the norm of the discarded operator.** Retaining the classes of
 weight at most `w` discards an operator whose Pauli norm is exactly `highNorm w O`. This connects
-the component `X_d` of `apd:eq:step_component` with the last equality of `apd:thm:triangle`, and
-it holds for an arbitrary operator `O`. -/
+the component `Õ^{(d)}_{≥w*+1}` of `apd:eq:step_component` with the high-weight norm
+`apd:eq:def_high_weight_norm` that the ladder bounds (the identification of the truncated mass at
+the start of the proof of `apd:thm:one_step_truncation_error`), and it holds for an arbitrary
+operator `O`. -/
 theorem pauliNorm_sub_truncOp_highSet_compl (w : ℕ) (O : Matrix (Bits n) (Bits n) ℂ) :
     pauliNorm (O - truncOp (highSet n w)ᶜ O) = highNorm w O := by
   rw [sub_truncOp_compl, pauliNorm_truncOp_highSet]

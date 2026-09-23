@@ -19,7 +19,7 @@ literal four-layer word in closed form,
   `coeff (pf2Output θ) (cls P₆) = -(sin θ)^3 (sin 2θ)^2`,
 
 which is nonzero for `0 < θ < π/2`, and shows that the same coefficient survives in the operator
-discarded by the truncation at `w* = 1`, the component `X_d` of `apd:eq:step_component`. Hence
+discarded by the truncation at `w* = 1`, the component `Õ^{(d)}_{≥w*+1}` of `apd:eq:step_component`. Hence
 the exponent `ΥΓ` in the weight bound `w* k_h^{ΥΓ}` on the discarded component
 (`apd:thm:lightcone`) cannot be replaced by `Γ`: here `w* k_h^Γ = 4 < 6`.
 
@@ -502,7 +502,7 @@ theorem pf2_coeff_ne_zero {θ : ℝ} (hθ : 0 < θ) (hθπ : 2 * θ < Real.pi) :
 
 /-- The operator discarded after this second-order step by the truncation at `w* = 1`:
 `pf2Output θ` minus its part on classes of weight at most one. This is the discarded component
-`X_d` of `apd:eq:step_component` for this step, not the part that is retained. -/
+`Õ^{(d)}_{≥w*+1}` of `apd:eq:step_component` for this step, not the part that is retained. -/
 noncomputable def pf2Discard (θ : ℝ) : Matrix (Bits 8) (Bits 8) ℂ :=
   pf2Output θ - truncOp (highSet 8 1)ᶜ (pf2Output θ)
 

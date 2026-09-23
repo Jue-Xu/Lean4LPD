@@ -11,7 +11,7 @@ import Lean4LPD.Pauli.Flow
 `Pauli/Flow.lean` builds `pauliLadder` over `traj`, the **untruncated** Heisenberg trajectory
 `O^{(g)} = U_g† O U_g`. LPD does not run that flow: it discards every Pauli above the weight
 threshold `w*` and carries the truncated observable `Õ^{(d)}_{≤w*}` forward. The component
-discarded at Trotter step `d`, `X_d = (1 - Π_{≤w*}) Ũ† Õ^{(d-1)}_{≤w*} Ũ`
+discarded at Trotter step `d`, `Õ^{(d)}_{≥w*+1} = (1 - Π_{≤w*}) Ũ† Õ^{(d-1)}_{≤w*} Ũ`
 (`apd:eq:step_component`), is the object the error accounting of `apd:thm:triangle` sums.
 This file defines the truncation as an operator, defines the trajectory with truncations
 interleaved, and proves that the damped ladder of `apd:thm:local_flow_k_local` survives arbitrary

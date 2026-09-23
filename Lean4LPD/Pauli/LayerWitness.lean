@@ -15,7 +15,7 @@ most `k_h ^ L` (`reachable_weight_le`). One step of the `p`th-order product form
 `apd:eq:suzuki` consists of `ΥΓ` layers, where `Γ` is the number of disjoint-support groups `H_γ`
 of the Hamiltonian and `Υ = 2·5^{p/2−1}` is the depth overhead of the formula, and the input of a
 step has weight at most `w*` after the preceding truncation. This is the count behind the weight
-bound `w* k_h^{ΥΓ}` on the Pauli strings of the discarded component `X_d` of
+bound `w* k_h^{ΥΓ}` on the Pauli strings of the discarded component `Õ^{(d)}_{≥w*+1}` of
 `apd:eq:step_component`. An explicit 8-qubit brickwork with `k_h = 2` shows that the bound is
 attained after two layers, and that in a second-order step a string is reachable whose weight
 exceeds `w* k_h^Γ`: the exponent has to count the `ΥΓ` layers of a step and not the `Γ` groups.
@@ -477,7 +477,7 @@ theorem gamma_layers_weight_le :
 Both are written with the phase `#{Y-sites} mod 4` — the canonical signless representative in
 `Pauli/Basic.lean`'s convention, which pins the sign that `isSelfAdjoint_iff_phase` alone leaves
 open. Hermiticity itself is checked below, so these are genuine observables, of the kind the
-discarded component `X_d` of `apd:eq:step_component` is a combination of, and not phase-decorated
+discarded component `Õ^{(d)}_{≥w*+1}` of `apd:eq:step_component` is a combination of, and not phase-decorated
 artefacts of the branching. -/
 
 /-- The weight-`4` witness: site types `X Y Z X` on qubits `1,2,3,4`. Reachable from `Z₃` in the

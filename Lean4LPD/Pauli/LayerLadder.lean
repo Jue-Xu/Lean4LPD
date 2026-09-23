@@ -49,7 +49,7 @@ truncation after every layer as well as truncation only at step boundaries (`S T
 between).
 
 `layerN` measures the operator that is *kept* along the trajectory. The operator discarded at a
-step boundary, `X_d` of `apd:eq:step_component`, is a different object: its norm is a high-weight
+step boundary, `Õ^{(d)}_{≥w*+1}` of `apd:eq:step_component`, is a different object: its norm is a high-weight
 norm before the cut. The two are related in `LayerError.lean`.
 -/
 
@@ -338,7 +338,7 @@ theorem layerN_step (Ls : ℕ → List (PauliString n × ℝ))
 `apd:eq:composition_majorant`. The fields `nonneg`, `init` and `step` are theorems about
 `layerTraj`; the hypotheses are only the layer structure, Hermiticity of the generators, the sine
 bound, `betaOf < 1` and `k_o`-locality of `O`.
-The ladder controls the rung masses of the kept operator; the discarded operator `X_d` is
+The ladder controls the rung masses of the kept operator; the discarded operator `Õ^{(d)}_{≥w*+1}` is
 treated in `LayerError.lean`. -/
 noncomputable def pauliMultiLadder (Ls : ℕ → List (PauliString n × ℝ))
     (S : ℕ → Finset (PauliIndex n)) (O : Matrix (Bits n) (Bits n) ℂ) {ko kh : ℕ}

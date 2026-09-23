@@ -42,7 +42,7 @@ with the time condition `apd:eq:time_condition`.
   cut.
 * `layerStepMass_reset`, `layerStepMass_inflow`: the two hypotheses of
   `MultiLadder.sum_block_inflow_le`, proved for the Pauli model.
-* `sum_pauliNorm_discardedLayerStep_le_chain`: the shifted-chain bound on `∑_d ‖X_d‖` of
+* `sum_pauliNorm_discardedLayerStep_le_chain`: the shifted-chain bound on `∑_d ‖Õ^{(d)}_{≥w*+1}‖` of
   `apd:eq:total_high_weight_norm`.
 * `layerStep_telescoping`, `pauliNorm_layerStep_error_le`: the telescoping identity and the
   norm-level triangle bound of `apd:thm:triangle`, for layered steps.
@@ -55,12 +55,12 @@ with the time condition `apd:eq:time_condition`.
 
 ## Implementation notes
 
-The discarded operator `X_d` lives at a step boundary, and its norm is the high-weight norm of
+The discarded operator `Õ^{(d)}_{≥w*+1}` lives at a step boundary, and its norm is the high-weight norm of
 the operator *before* the cut. The kept trajectory, whose rung masses `pauliMultiLadder`
 controls, has no mass above the cutoff right after a boundary. The bridge is `layerStepMass`:
 within a step it starts from zero (`layerStepMass_reset`) and grows by the multi-jump inflow from
 the lower rungs of the kept trajectory (`layerStepMass_inflow`). With these two facts,
-`MultiLadder.sum_block_inflow_le` bounds `∑_d ‖X_d‖` by the shifted-chain sum of
+`MultiLadder.sum_block_inflow_le` bounds `∑_d ‖Õ^{(d)}_{≥w*+1}‖` by the shifted-chain sum of
 `apd:eq:total_high_weight_norm`, and `MultiLadder.sum_block_epsJump_le_cZero` by the `c₀` form.
 
 `layerStepTraj` and `layerScheduledTraj` are defined independently, and their agreement at step
@@ -118,7 +118,7 @@ open Finset
 variable {n : ℕ}
 
 /-- The untruncated evolution through the first `i` layers of a fixed block, as used to define
-`X_d` in `apd:eq:step_component`. -/
+`Õ^{(d)}_{≥w*+1}` in `apd:eq:step_component`. -/
 noncomputable def layerBlockTraj (layers : ℕ → List (PauliString n × ℝ))
     (O : Matrix (Bits n) (Bits n) ℂ) : ℕ → Matrix (Bits n) (Bits n) ℂ
   | 0 => O
